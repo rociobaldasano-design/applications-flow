@@ -1,0 +1,101 @@
+{% extends "layouts/back-office.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/2-planning-authority"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-xl">
+        Check your answers before sending your application
+      </h1>
+
+      <!-- IF IT IS AN APPLICATION: Show all 4 rows -->
+      {% if data['preapplication-or-application'] == 'Application' %}
+      
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Application details"
+            }
+          },
+          rows: [
+            {
+              key: { text: "Application classification?" },
+              value: { text: data['preapplication-or-application'] },
+              actions: { items: [ { href: "/0-application-classification", text: "Change", visuallyHiddenText: "Is this a pre-application or an application?" } ] }
+            },
+            {
+              key: { text: "Is this a major or non-major case?" },
+              value: { text: data['major-or-nonmajor'] },
+              actions: { items: [ { href: "/0-application-stage", text: "Change", visuallyHiddenText: "Is this a major or non-major case?" } ] }
+            },
+            {
+              key: { text: "What type of application is it?" },
+              value: { text: data['application-type'] },
+              actions: { items: [ { href: "/1-application-type", text: "Change", visuallyHiddenText: "What type of application is it?" } ] }
+            },
+            {
+              key: { text: "Which local planning authority is this application related to?" },
+              value: { text: data['planning-authority'] },
+              actions: { items: [ { href: "/2-planning-authority", text: "Change", visuallyHiddenText: "Which local planning authority is this application related to?" } ] }
+            }
+          ]
+        }) }}
+
+      <!-- ELSE (IF IT IS A PRE-APPLICATION): Show only 3 rows -->
+      {% else %}
+
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Application details"
+            }
+          },
+          rows: [
+            {
+              key: { text: "Application classification" },
+              value: { text: data['preapplication-or-application'] },
+              actions: { items: [ { href: "/0-application-classification", text: "Change", visuallyHiddenText: "Is this a pre-application or an application?" } ] }
+            },
+            {
+              key: { text: "What type of application is it?" },
+              value: { text: data['application-type'] },
+              actions: { items: [ { href: "/1-application-type", text: "Change", visuallyHiddenText: "What type of application is it?" } ] }
+            },
+            {
+              key: { text: "Which local planning authority is this application related to?" },
+              value: { text: data['planning-authority'] },
+              actions: { items: [ { href: "/2-planning-authority", text: "Change", visuallyHiddenText: "Which local planning authority is this application related to?" } ] }
+            }
+          ]
+        }) }}
+
+      {% endif %}
+
+      <h2 class="govuk-heading-m">
+        Now send your application
+      </h2>
+
+      <p class="govuk-body">
+        By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
+      </p>
+
+      <form action="/confirmation" method="post" novalidate>
+        {{ govukButton({
+          text: "Accept and send"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{
+  "serviceName": "Manage Section 62A applications",
+  "useServiceNavigation": true,
+  "plugins": {
+    "govuk-frontend": {
+      "rebrand": true
+    }
+  }
+}
